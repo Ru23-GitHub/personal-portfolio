@@ -6,6 +6,14 @@
   font-display:swap;
 }
 
+@font-face{
+  font-family:'Nintendo';
+  src:url('../fonts/nintendo.otf') format('opentype');
+  font-weight:normal;
+  font-style:normal;
+  font-display:swap;
+}
+
 #hero{
   --title-delay: 0s;
   --char-dur: 1.6s;
@@ -38,6 +46,9 @@
   visibility:hidden; /* reveal after first fit to avoid offscreen flash */
 }
 
+#hero .logo-link{ display:block; text-decoration:none; }
+#hero .logo-link:hover, #hero .logo-link:focus-visible{ text-decoration:none; }
+
 #hero .logo{ text-align:center; user-select:none; position:relative; overflow:visible; }
 
 #hero .word{
@@ -55,7 +66,20 @@
 
 #hero .char{
   display:inline-block; transform-origin:50% 100%;
-  opacity:0; will-change:transform,color,opacity; position:relative;
+  opacity:0; position:relative;
+  /* This bold italic font's glyph ink overhangs its own advance-width box by
+     up to ~0.21em on the right (measured via canvas actualBoundingBoxRight),
+     and the tightened line-height (.9, set on .word) plus the word's
+     scaleY(1.2) stretch leaves too little room above each glyph too. Each
+     character is animated independently, which some mobile WebKit builds
+     paint as a box-clipped layer — that overhang gets cropped even though
+     overflow is visible everywhere. Padding gives the ink room on both
+     edges. The right padding's matching negative margin cancels it back out
+     so the tight letter-spacing look is unaffected; padding-top needs no
+     such compensation since flex-end alignment anchors each character's
+     bottom edge, so extending upward doesn't shift anything. */
+  padding-right:.28em; margin-right:-.28em;
+  padding-top:.3em;
   animation-name:char-entry,gb-color;
   animation-duration:var(--char-dur);
   animation-timing-function:linear;
@@ -106,32 +130,26 @@
 #hero .space{ display:inline-block; width:.4em; }
 
 /* Scroll-down affordance — styled after the pink "Nintendo" sub-brand text
-   under the GAME BOY logo: same font, italic, magenta, sitting close below
-   the logo's actual rendered edge (--logo-bottom, set by fitToViewport()). */
+   under the GAME BOY logo: same real Nintendo font, magenta, sitting close
+   below the logo's actual rendered edge (--logo-bottom, set by
+   fitToViewport()). */
 #hero .scroll-cue{
   position:absolute; left:50%;
-  top:calc(var(--logo-bottom, 60%) + clamp(14px, 3vh, 32px));
+  top:calc(var(--logo-bottom, 60%) + clamp(28px, 6vh, 56px));
   transform:translateX(-50%);
-  display:flex; flex-direction:column; align-items:center; gap:6px;
+  display:flex; flex-direction:row; align-items:center; gap:8px;
   color:#ff3dee; text-decoration:none;
-  font-family:'GameBoy', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  font-style:italic; font-weight:700;
-  font-size:16px; letter-spacing:.02em;
+  font-family:'Nintendo', 'GameBoy', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size:18px; letter-spacing:.02em;
   opacity:0; animation: cue-fade-in .6s ease-out 3s forwards;
 }
 #hero .scroll-cue svg{
-  width:20px; height:20px;
-  animation: cue-bounce 1.6s ease-in-out infinite;
+  width:16px; height:16px;
 }
 @keyframes cue-fade-in{ to{ opacity:.65 } }
-@keyframes cue-bounce{
-  0%,100%{ transform:translateY(0) }
-  50%{ transform:translateY(6px) }
-}
 
 @media (prefers-reduced-motion: reduce){
   #hero .char{ animation:none; opacity:1 }
   #hero .shine{ display:none }
   #hero .scroll-cue{ animation:none; opacity:.65 }
-  #hero .scroll-cue svg{ animation:none }
 }
