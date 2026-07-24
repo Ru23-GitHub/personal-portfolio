@@ -6,7 +6,6 @@
   --border:#e4e6ea;
   --accent:#1733ff;   /* echoes the final color in the hero's letter animation */
   --accent-2:#ff3dee;
-  --nav-h:56px;
 
   --container: clamp(320px, 90vw, 960px);
   --space-s: clamp(8px, 2vw, 16px);
@@ -47,31 +46,11 @@ img, svg{ max-width:100%; display:block; }
 a{ color:var(--accent); text-decoration:none; }
 a:hover, a:focus-visible{ text-decoration:underline; }
 
-section{ scroll-margin-top: var(--nav-h); }
-
 .container{
   width:var(--container);
   margin-inline:auto;
   padding-block: var(--space-l);
 }
-
-/* Sticky nav — lives right after the full-height hero, so it only enters
-   the viewport (and starts sticking) once the visitor scrolls past it. */
-#site-nav{
-  position:sticky; top:0; z-index:100;
-  height:var(--nav-h);
-  display:flex; align-items:center; justify-content:center; gap:var(--space-m);
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--border);
-  font-family:'GameBoy',system-ui,sans-serif;
-  font-size:13px;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-}
-#site-nav a{ color:var(--text); }
-#site-nav a:hover, #site-nav a:focus-visible{ color:var(--accent); }
 
 h1, h2, h3{
   font-family:'GameBoy',system-ui,sans-serif;
