@@ -137,14 +137,12 @@
   position:absolute; left:50%;
   top:calc(var(--logo-bottom, 60%) + clamp(28px, 6vh, 56px));
   transform:translateX(-50%);
-  display:flex; flex-direction:row; align-items:center; gap:8px;
+  display:flex; align-items:center;
   color:#ff3dee; text-decoration:none;
-  font-family:'Nintendo', 'GameBoy', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  font-size:18px; letter-spacing:.02em;
   opacity:0; animation: cue-fade-in .6s ease-out 3s forwards;
 }
 #hero .scroll-cue svg{
-  width:16px; height:16px;
+  width:24px; height:24px;
 }
 @keyframes cue-fade-in{ to{ opacity:.65 } }
 
